@@ -2,7 +2,6 @@ name: Build
 on: push
 
 env:
-  EARTHLY_CI: true
   FORCE_COLOR: 1
 
 jobs:
@@ -32,8 +31,8 @@ jobs:
       - name: Run test and build
         run: |
           earthly bootstrap
-          earthly +test
-          earthly +build
+          earthly --ci +test
+          earthly --use-inline-cache --save-inline-cache --strict +build
 
       - name: upload earthlyw
         uses: actions/upload-artifact@v2
