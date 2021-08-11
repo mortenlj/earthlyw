@@ -5,7 +5,7 @@ wrapper:
     RUN wget $(curl -s https://api.github.com/repos/mortenlj/earthlyw/releases/latest | jq -r ".assets[] | select(.name | test(\"earthlyw\")) | .browser_download_url")
     SAVE ARTIFACT earthlyw /earthlyw AS LOCAL ./earthlyw
     LOCALLY
-    RUN echo "I'm in ${PWD} now!"
+    RUN chmod a+x ./earthlyw
 
 project:
     FROM python:3-alpine
