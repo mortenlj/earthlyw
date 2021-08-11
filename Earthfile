@@ -1,8 +1,11 @@
 FROM alpine:latest
 
-install:
+wrapper:
     RUN apk add curl jq --quiet --no-cache
     RUN wget $(curl -s https://api.github.com/repos/mortenlj/earthlyw/releases/latest | jq -r ".assets[] | select(.name | test(\"earthlyw\")) | .browser_download_url")
+    SAVE ARTIFACT earthlyw /earthlyw
+    LOCALLY
+    RUN echo "I'm in ${PWD} now!"
 
 project:
     FROM python:3-alpine
@@ -24,4 +27,5 @@ build:
     FROM +project
     RUN pip install pex
     RUN pex -v --output-file=earthlyw --find-links=wheels -c earthlyw .
+    RUN false
     SAVE ARTIFACT earthlyw /earthlyw AS LOCAL ./bin/earthlyw

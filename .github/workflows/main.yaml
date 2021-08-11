@@ -1,6 +1,10 @@
 name: Build
 on: push
 
+env:
+  EARTHLY_CI=true
+  FORCE_COLOR=1
+
 jobs:
   set-version:
     runs-on: ubuntu-latest
