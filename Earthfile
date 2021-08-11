@@ -3,9 +3,7 @@ FROM alpine:latest
 wrapper:
     RUN apk add curl jq --quiet --no-cache
     RUN wget $(curl -s https://api.github.com/repos/mortenlj/earthlyw/releases/latest | jq -r ".assets[] | select(.name | test(\"earthlyw\")) | .browser_download_url")
-    SAVE ARTIFACT earthlyw /earthlyw AS LOCAL ./earthlyw
-    LOCALLY
-    RUN chmod a+x ./earthlyw
+    SAVE ARTIFACT earthlyw /earthlyw
 
 project:
     FROM python:3-alpine
