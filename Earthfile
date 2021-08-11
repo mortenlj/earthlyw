@@ -25,5 +25,4 @@ build:
     FROM +project
     RUN pip install pex
     RUN pex -v --output-file=earthlyw --find-links=wheels -c earthlyw .
-    RUN false
     SAVE ARTIFACT earthlyw /earthlyw AS LOCAL ./bin/earthlyw
