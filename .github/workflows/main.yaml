@@ -30,7 +30,6 @@ jobs:
 
       - name: Run test and build
         run: |
-          earthly bootstrap
           earthly --ci +test
           earthly --use-inline-cache --save-inline-cache --strict +build
 
