@@ -11,6 +11,7 @@ setup(
     ],
     install_requires=[
         "setuptools",
+        "colorlog<6"
     ],
     extras_require={
         "dev": [
