@@ -4,6 +4,8 @@ import sys
 
 import colorlog
 
+from ibidem.earthlyw import identify
+
 
 def init_logging():
     log_level = logging.WARNING
@@ -24,9 +26,9 @@ def init_logging():
 def main():
     init_logging()
     log = logging.getLogger(__name__)
-    log.info("Figure out which version of earthly we need")
+    version = identify.select_version()
+    binary_name = identify.find_binary_name()
     log.info("See if we happen to have the correct binary already in our cache")
-    log.info("Check which os and arch we're on")
     log.info("Download the correct binary and put it in the cache location")
     log.info("Exec into earthly, passing along environment and args")
 
