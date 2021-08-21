@@ -66,8 +66,8 @@ jobs:
 
             <details>
             <summary>Release candidate data</summary>
-            ```
+            \`\`\`
             version: ${{ needs.set-version.outputs.version }}
             run_id: ${{ github.run_id }}
-            ```
+            \`\`\`
             </details>
