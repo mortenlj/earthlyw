@@ -8,6 +8,8 @@ jobs:
     env:
       GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
     steps:
+      - uses: actions/checkout@v2
+
       - name: Get release candidate
         id: get_data
         uses: ./.github/actions/get_data
