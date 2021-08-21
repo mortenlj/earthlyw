@@ -2,6 +2,19 @@ name: Release
 on: issue_comment
 
 jobs:
+  debug:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Debugging
+        run: |
+          echo "::group::Comment"
+          echo "${{ github.event.comment }}"
+          echo "::endgroup::"
+
+          echo "::group::Sender"
+          echo "${{ github.sender }}"
+          echo "::endgroup::"
+
   release:
     runs-on: ubuntu-latest
     if: contains(github.event.comment, '/approve-release') && github.sender == 'mortenlj'
