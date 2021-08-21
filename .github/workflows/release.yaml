@@ -35,3 +35,9 @@ jobs:
           asset_path: ./earthlyw
           asset_name: earthlyw
           asset_content_type: application/octet-stream
+
+      - uses: lee-dohm/close-matching-issues@v2
+        if: success()
+        with:
+          query: 'label:release-candidate'
+          token: ${{ secrets.GITHUB_TOKEN }}

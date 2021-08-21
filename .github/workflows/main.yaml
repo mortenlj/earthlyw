@@ -53,6 +53,7 @@ jobs:
         with:
           query: 'label:release-candidate'
           token: ${{ secrets.GITHUB_TOKEN }}
+
       - uses: nashmaniac/create-issue-action@v1.1
         name: Create Release candidate issue
         with:
