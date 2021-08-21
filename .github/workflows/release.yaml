@@ -4,7 +4,7 @@ on: issue_comment
 jobs:
   release:
     runs-on: ubuntu-latest
-    if: contains(github.event.comment, "/approve-release") && github.sender == "mortenlj"
+    if: contains(github.event.comment, '/approve-release') && github.sender == 'mortenlj'
     env:
       GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
     steps:
