@@ -40,7 +40,7 @@ jobs:
           path: bin/earthlyw
           if-no-files-found: error
 
-  release:
+  release-candidate:
     if: ${{ github.ref == 'refs/heads/main' }}
     needs:
       - set-version
@@ -49,23 +49,25 @@ jobs:
     env:
       GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
     steps:
-      - name: create release
-        id: create_release
-        uses: actions/create-release@v1
+      - uses: lee-dohm/close-matching-issues@v2
         with:
-          tag_name: ${{ needs.set-version.outputs.version }}
-          release_name: Release ${{ needs.set-version.outputs.version }}
-          draft: false
-          prerelease: false
+          query: 'label:release-candidate'
+          token: ${{ secrets.GITHUB_TOKEN }}
+      - uses: nashmaniac/create-issue-action@v1.1
+        name: Create Release candidate issue
+        with:
+          title: Release candidate ${{ needs.set-version.outputs.version }}
+          token: ${{secrets.GITHUB_TOKEN}}
+          labels: release-candidate
+          body: |
+            A new release candidate has been created.
 
-      - name: download artifact
-        uses: actions/download-artifact@v2
-        with:
-          name: earthlyw
-      - name: upload earthlyw to release
-        uses: actions/upload-release-asset@v1
-        with:
-          upload_url: ${{ steps.create_release.outputs.upload_url }}
-          asset_path: ./earthlyw
-          asset_name: earthlyw
-          asset_content_type: application/octet-stream
+            Comment on this issue with `/approve-release` to promote this candidate to a full release.
+
+            <details>
+            <summary>Release candidate data</summary>
+            ```
+            version: ${{ needs.set-version.outputs.version }}
+            run_id: ${{ github.run_id }}
+            ```
+            </details>
