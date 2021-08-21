@@ -2,26 +2,9 @@ name: Release
 on: issue_comment
 
 jobs:
-  debug:
-    runs-on: ubuntu-latest
-    steps:
-      - name: Debugging
-        run: |
-          echo "::group::Comment"
-          echo "${{ github.event.comment.body }}"
-          echo "::endgroup::"
-
-          echo "::group::Sender"
-          echo "${{ github.sender }}"
-          echo "::endgroup::"
-
-          echo "::group::Author association"
-          echo "${{ github.event.comment.author_association }}"
-          echo "::endgroup::"
-
   release:
     runs-on: ubuntu-latest
-    if: contains(github.event.comment.body, '/approve-release') && github.sender == 'mortenlj'
+    if: contains(github.event.comment.body, '/approve-release') && github.event.comment.author_association == 'OWNER'
     env:
       GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
     steps:
