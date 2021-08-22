@@ -1,16 +1,17 @@
 import logging
 import os
+import os.path
 import sys
 
 import colorlog
 
-from ibidem.earthlyw import identify
+from ibidem.earthlyw import identify, fetch
 
 
 def init_logging():
-    log_level = logging.WARNING
-    if os.getenv("EARTHLYW_VERBOSE") is not None:
-        log_level = logging.DEBUG
+    log_level = os.getenv("EARTHLYW_LOGLEVEL", logging.getLevelName(logging.WARNING))
+    if log_level is not None:
+        log_level = logging.getLevelName(log_level)
     root = logging.getLogger()
     root.setLevel(log_level)
     handler = logging.StreamHandler(stream=sys.stdout)
@@ -28,9 +29,9 @@ def main():
     log = logging.getLogger(__name__)
     version = identify.select_version()
     binary_name = identify.find_binary_name()
-    log.info("See if we happen to have the correct binary already in our cache")
-    log.info("Download the correct binary and put it in the cache location")
-    log.info("Exec into earthly, passing along environment and args")
+    binary_path = fetch.provide_binary(version, binary_name)
+    log.debug("Execing into earthly, passing along environment and args")
+    os.execv(binary_path, ["earthly"] + sys.argv[1:])
 
 
 if __name__ == '__main__':

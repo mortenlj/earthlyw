@@ -11,7 +11,8 @@ setup(
     ],
     install_requires=[
         "setuptools",
-        "colorlog<6"
+        "colorlog<6",
+        "appdirs<2",
     ],
     extras_require={
         "dev": [
