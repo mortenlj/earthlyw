@@ -27,11 +27,15 @@ def init_logging():
 def main():
     init_logging()
     log = logging.getLogger(__name__)
-    version = identify.select_version()
-    binary_name = identify.find_binary_name()
-    binary_path = fetch.provide_binary(version, binary_name)
-    log.debug("Execing into earthly, passing along environment and args")
-    os.execv(binary_path, ["earthly"] + sys.argv[1:])
+    try:
+        version = identify.select_version()
+        binary_name = identify.find_binary_name()
+        binary_path = fetch.provide_binary(version, binary_name)
+        log.debug("Execing into earthly, passing along environment and args")
+        os.execv(binary_path, ["earthly"] + sys.argv[1:])
+    except Exception as e:
+        log.error(str(e))
+        sys.exit(-1)
 
 
 if __name__ == '__main__':

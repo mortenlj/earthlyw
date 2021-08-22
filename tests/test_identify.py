@@ -1,15 +1,18 @@
-from ibidem.earthlyw.identify import find_binary_name
+import pytest
+from unittest.mock import patch
 
-VALID_BINARIES = {
-    "earthly-darwin-amd64",
-    "earthly-darwin-arm64",
-    "earthly-linux-amd64",
-    "earthly-linux-arm64",
-    "earthly-linux-arm7",
-    "earthly-windows-amd64.exe",
-}
+from ibidem.earthlyw import identify
 
 
-def test_binary_name():
-    actual = find_binary_name()
-    assert actual in VALID_BINARIES
+class TestIdentify:
+    @pytest.mark.parametrize("os, arch, binary_name", (
+            ("windows", "x86_64", "earthly-windows-amd64.exe"),
+            ("Linux", "x86_64", "earthly-linux-amd64"),
+    ))
+    def test_binary_name(self, os, arch, binary_name):
+        with patch("ibidem.earthlyw.identify.platform.system") as system_mock:
+            with patch("ibidem.earthlyw.identify.platform.machine") as machine_mock:
+                system_mock.return_value = os
+                machine_mock.return_value = arch
+                actual = identify.find_binary_name()
+                assert actual == binary_name
