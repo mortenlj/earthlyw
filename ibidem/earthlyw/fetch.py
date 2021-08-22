@@ -1,13 +1,43 @@
 import os
 import logging
+import stat
 
 import appdirs
+import requests
+from github import Github
+
 
 LOG = logging.getLogger(__name__)
 
 
+class InvalidBinaryNameError(Exception):
+    def __str__(self):
+        return f"No asset named {self.args[0]} in selected release"
+
+
+def _save_binary(browser_download_url, binary_path):
+    LOG.debug("Downloading %s to %s", browser_download_url, binary_path)
+    resp = requests.get(browser_download_url)
+    resp.raise_for_status()
+    target_dir = os.path.dirname(binary_path)
+    if not os.path.isdir(target_dir):
+        os.makedirs(target_dir)
+    with open(binary_path, "wb") as fobj:
+        fobj.write(resp.content)
+    os.chmod(binary_path, stat.S_IXUSR)
+
+
 def _download_binary(version, binary_name, binary_path):
-    raise NotImplementedError("Not yet implemented")
+    github = Github()
+    repo = github.get_repo("earthly/earthly")
+    if version == "latest":
+        release = repo.get_latest_release()
+    else:
+        raise NotImplementedError("Don't know how to find versions other than `latest`")
+    for asset in release.get_assets():
+        if asset.name == binary_name:
+            return _save_binary(asset.browser_download_url, binary_path)
+    raise InvalidBinaryNameError(binary_name)
 
 
 def provide_binary(version, binary_name):

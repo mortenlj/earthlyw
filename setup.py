@@ -13,6 +13,8 @@ setup(
         "setuptools",
         "colorlog<6",
         "appdirs<2",
+        "pygithub<2",
+        "requests<3",
     ],
     extras_require={
         "dev": [
