@@ -26,7 +26,7 @@ Upgrades
 
 Upgrading to the latest ``earthlyw`` is just a matter of running the installer again, but this time using the wrapper::
 
-    earthly -a github.com/mortenlj/earthlyw:main+wrapper/earthlyw
+    ./earthlyw -a github.com/mortenlj/earthlyw:main+wrapper/earthlyw
 
 
 Usage
