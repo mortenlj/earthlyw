@@ -17,7 +17,7 @@ Installation
 Earthlyw works by adding an executable to your project, that will download the appropriate earthly binary and use that for running earthly commands.
 The benefit of using ``earthlyw`` instead of just adding the ``earthly`` binary to the project, is that ``earthlyw`` works cross-platform, on all platforms/architectures with a working Python interpreter (which should include most Linux and Mac OS setups, as well as some Windows machines).
 
-If you already have ``earthly`` installed, you can run ``earthly -a github.com/mortenlj/earthlyw:main+wrapper/earthlyw`` in your project directory, and the wrapper will be added.
+If you already have ``earthly`` installed, you can run ``earthly --no-cache -a github.com/mortenlj/earthlyw:main+wrapper/earthlyw`` in your project directory, and the wrapper will be added.
 
 For a manual installation, go to https://github.com/mortenlj/earthlyw/releases/latest and download the latest executable, and add it to your project.
 
@@ -26,7 +26,7 @@ Upgrades
 
 Upgrading to the latest ``earthlyw`` is just a matter of running the installer again, but this time using the wrapper::
 
-    ./earthlyw -a github.com/mortenlj/earthlyw:main+wrapper/earthlyw
+    ./earthlyw --no-cache -a github.com/mortenlj/earthlyw:main+wrapper/earthlyw
 
 
 Usage
