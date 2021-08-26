@@ -4,7 +4,7 @@ import stat
 
 import appdirs
 import requests
-from github import Github
+from .github import GithubLite
 
 
 LOG = logging.getLogger(__name__)
@@ -28,13 +28,13 @@ def _save_binary(browser_download_url, binary_path):
 
 
 def _download_binary(version, binary_name, binary_path):
-    github = Github()
+    github = GithubLite()
     repo = github.get_repo("earthly/earthly")
     if version == "latest":
         release = repo.get_latest_release()
     else:
         raise NotImplementedError("Don't know how to find versions other than `latest`")
-    for asset in release.get_assets():
+    for asset in release.assets:
         if asset.name == binary_name:
             return _save_binary(asset.browser_download_url, binary_path)
     raise InvalidBinaryNameError(binary_name)
