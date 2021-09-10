@@ -1,0 +1,57 @@
+#!/bin/bash
+# Find the system earthly executable to fall back on.
+EARTHLY=$(which earthly)
+ 
+# Default names for things
+EARTHLYW='earthlyw'
+EARTHFILE='Earthfile'
+
+EARTHLYW_FOUND=false
+EARTHFILE_FOUND=false
+ 
+CURR_PATH="${PWD}"
+ 
+function error_exit() {
+  echo "${@}" >&2
+  exit 1
+}
+ 
+# First, search recursively upwards for an Earthfile.
+until [[ "${CURR_PATH}" == "/" ]] || ${EARTHFILE_FOUND}; do
+  if [[ -e "${CURR_PATH}/${EARTHFILE}" ]]; then
+    EARTHFILE_FOUND=true
+    EARTHFILE="${CURR_PATH}/${EARTHFILE}"
+  else
+    CURR_PATH=$(dirname "${CURR_PATH}")
+  fi
+done
+ 
+# Fail fast if we don't find an Earthfile.
+! ${EARTHFILE_FOUND} && error_exit "Unable to find a ${EARTHFILE} in any parent directory of ${PWD}."
+ 
+# Search recursively upwards from the first-found Earthfile for a earthlyw.
+until [[ "${CURR_PATH}" == "/" ]] || ${EARTHLYW_FOUND}; do
+  if [[ -x "${CURR_PATH}/${EARTHLYW}" ]]; then
+    EARTHLYW_FOUND=true
+    # Prefer the earthly wrapper if one exists in this tree.
+    EARTHLY="${CURR_PATH}/${EARTHLYW}"
+  else 
+    CURR_PATH=$(dirname "${CURR_PATH}")
+  fi
+done
+ 
+# Select the right earthly or error out if no good options exist.
+if ${EARTHLYW_FOUND}; then
+  EARTHLY_TYPE="wrapper"
+elif [[ -x ${EARTHLY} ]]; then
+  EARTHLY_TYPE="executable"
+  echo "There is no ${EARTHLYW} set up for this project. You may want to consider setting one up."
+  echo "See: http://github.com/mortenlj/earthlyw"
+else
+  error_exit "Unable to find ${EARTHLYW} or a earthly executable installed and available on your path."
+fi
+ 
+# Say what we are gonna do, then do it.
+VERSION="$(${EARTHLY} --version)"
+echo -e "Using earthly ${EARTHLY_TYPE} at '${EARTHLY}' (${VERSION}) to run '${EARTHFILE}':\n"
+cd "$(dirname "${EARTHFILE}")" && "${EARTHLY}" "${@}"

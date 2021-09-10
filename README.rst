@@ -6,11 +6,6 @@ A wrapper for earthly_ in the vein of gradle-wrapper_.
 .. _earthly: https://earthly.dev
 .. _gradle-wrapper: https://docs.gradle.org/current/userguide/gradle_wrapper.html
 
-This project will start off with "README driven development".
-That is, the README describes all the wanted features, and then we try to make the project do all the things we promised it would do.
-
-If something in this readme doesn't work, it's probably because we haven't gotten there yet.
-
 Installation
 ------------
 
@@ -38,6 +33,16 @@ Examples::
 
     ./earthlyw github.com/earthly/hello-world:main+hello
 
+Some times it can be tedious to type a relative path to the ``earthlyw`` binary.
+But since it is included in the repo, adding it to your ``PATH`` isn't an option either.
+If you use ``earthly`` or ``earthlyw`` a lot, it can some times be hard to remember which repo has a wrapper, and which repos just assume you have ``earthly`` on your ``PATH``.
+
+For these cases, a small bash-script_ is available in the root of this repository.
+It is designed to be plopped into any directory on your ``PATH``.
+When executing this script, it will search upwards for an ``Earthfile``, and an ``earthlyw``.
+In the end, it will execute your command using either the found wrapper, or the ``earthly`` command, in the directory containing the found ``Earthfile``.
+
+.. _bash-script: https://raw.githubusercontent.com/mortenlj/earthlyw/main/ew
 
 Versions
 --------
