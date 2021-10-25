@@ -31,7 +31,7 @@ done
  
 # Search recursively upwards from the first-found Earthfile for a earthlyw.
 until [[ "${CURR_PATH}" == "/" ]] || ${EARTHLYW_FOUND}; do
-  if [[ -x "${CURR_PATH}/${EARTHLYW}" ]]; then
+  if [[ -x "${CURR_PATH}/${EARTHLYW}" && ! -d "${CURR_PATH}/${EARTHLYW}" ]]; then
     EARTHLYW_FOUND=true
     # Prefer the earthly wrapper if one exists in this tree.
     EARTHLY="${CURR_PATH}/${EARTHLYW}"
