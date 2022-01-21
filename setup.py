@@ -31,7 +31,7 @@ setup(
     # Metadata
     author="Morten Lied Johansen",
     author_email="mortenjo@ifi.uio.no",
-    license="LGPL",
+    license="MIT",
     keywords="ibidem earthly",
     url="https://github.com/mortenlj/earthlyw",
 
