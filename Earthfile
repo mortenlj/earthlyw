@@ -1,3 +1,5 @@
+VERSION 0.6
+
 FROM alpine:latest
 
 wrapper:
