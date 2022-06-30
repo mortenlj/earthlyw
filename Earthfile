@@ -11,16 +11,16 @@ wrapper:
 project:
     FROM python:3-alpine
     WORKDIR /code
-    RUN pip install --use-feature=in-tree-build --upgrade wheel pip setuptools
+    RUN pip install --upgrade wheel pip setuptools
     COPY setup.py ./
     COPY ibidem ibidem
-    RUN pip wheel --wheel-dir=wheels --use-feature=in-tree-build .
+    RUN pip wheel --wheel-dir=wheels .
     SAVE ARTIFACT wheels /wheels
     SAVE ARTIFACT ./ /src
 
 test:
     FROM +project
-    RUN pip install --find-links=wheels --use-feature=in-tree-build .[dev]
+    RUN pip install --find-links=wheels .[dev]
     COPY tests tests
     RUN pytest
 
