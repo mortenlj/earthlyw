@@ -13,7 +13,7 @@ jobs:
       - uses: actions/checkout@v2
       - name: set version
         id: set-version
-        run: echo ::set-output name=version::$(date "+%Y-%m-%d-%H%M%S")-$(git rev-parse --short HEAD)
+        run: echo version=$(date "+%Y-%m-%d-%H%M%S")-$(git rev-parse --short HEAD) >> "${GITHUB_OUTPUT}"
 
   build:
     needs:
