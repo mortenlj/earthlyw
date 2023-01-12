@@ -11,7 +11,7 @@ setup(
     ],
     install_requires=[
         "setuptools",
-        "colorlog<6",
+        "colorlog<7",
         "appdirs<2",
         "requests<3",
     ],
