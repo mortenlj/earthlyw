@@ -10,7 +10,7 @@ jobs:
     outputs:
       version: ${{ steps.set-version.outputs.version }}
     steps:
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v4
       - name: set version
         id: set-version
         run: echo version=$(date "+%Y-%m-%d-%H%M%S")-$(git rev-parse --short HEAD) >> "${GITHUB_OUTPUT}"
@@ -20,7 +20,7 @@ jobs:
       - set-version
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v4
 
       - name: Download latest earthly # TODO: Use earthlyw across multiple architectures
         run: "sudo /bin/sh -c 'wget https://github.com/earthly/earthly/releases/download/v0.5.20/earthly-linux-amd64 -O /usr/local/bin/earthly && chmod +x /usr/local/bin/earthly'"
