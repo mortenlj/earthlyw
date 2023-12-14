@@ -46,6 +46,8 @@ jobs:
       - set-version
       - build
     runs-on: ubuntu-latest
+    permissions:
+        issues: write
     env:
       GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
     steps:
@@ -54,7 +56,7 @@ jobs:
           query: 'label:release-candidate'
           token: ${{ secrets.GITHUB_TOKEN }}
 
-      - uses: nashmaniac/create-issue-action@v1.2
+      - uses: dacbd/create-issue-action@v1.2.1
         name: Create Release candidate issue
         with:
           title: Release candidate ${{ needs.set-version.outputs.version }}
