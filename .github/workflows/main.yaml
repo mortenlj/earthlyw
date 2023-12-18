@@ -34,7 +34,7 @@ jobs:
           earthly --use-inline-cache --save-inline-cache --strict +build
 
       - name: upload earthlyw
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v4
         with:
           name: earthlyw
           path: bin/earthlyw
