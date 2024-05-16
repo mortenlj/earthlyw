@@ -22,22 +22,18 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
-      - name: Download latest earthly # TODO: Use earthlyw across multiple architectures
-        run: "sudo /bin/sh -c 'wget https://github.com/earthly/earthly/releases/download/v0.5.20/earthly-linux-amd64 -O /usr/local/bin/earthly && chmod +x /usr/local/bin/earthly'"
-
-      - name: Earthly version
-        run: earthly --version
-
-      - name: Run test and build
-        run: |
-          earthly --ci +test
-          earthly --use-inline-cache --save-inline-cache --strict +build
-
       - name: upload earthlyw
         uses: actions/upload-artifact@v4
         with:
           name: earthlyw
           path: bin/earthlyw
+          if-no-files-found: error
+
+      - name: upload ew
+        uses: actions/upload-artifact@v4
+        with:
+          name: ew
+          path: bin/ew
           if-no-files-found: error
 
   release-candidate:

@@ -23,7 +23,7 @@ jobs:
           draft: false
           prerelease: false
 
-      - name: Download artifact
+      - name: Download earthlyw artifact
         uses: dawidd6/action-download-artifact@v3
         with:
           workflow: main.yaml
@@ -36,6 +36,21 @@ jobs:
           upload_url: ${{ steps.create_release.outputs.upload_url }}
           asset_path: ./earthlyw
           asset_name: earthlyw
+          asset_content_type: application/octet-stream
+
+      - name: Download ew artifact
+        uses: dawidd6/action-download-artifact@v3
+        with:
+          workflow: main.yaml
+          run_id: ${{ steps.get_data.outputs.run_id }}
+          name: ew
+
+      - name: upload ew to release
+        uses: actions/upload-release-asset@v1
+        with:
+          upload_url: ${{ steps.create_release.outputs.upload_url }}
+          asset_path: ./ew
+          asset_name: ew
           asset_content_type: application/octet-stream
 
       - uses: lee-dohm/close-matching-issues@v2
