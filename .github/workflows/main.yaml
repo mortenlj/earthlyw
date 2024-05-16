@@ -26,14 +26,14 @@ jobs:
         uses: actions/upload-artifact@v4
         with:
           name: earthlyw
-          path: bin/earthlyw
+          path: earthlyw
           if-no-files-found: error
 
       - name: upload ew
         uses: actions/upload-artifact@v4
         with:
           name: ew
-          path: bin/ew
+          path: ew
           if-no-files-found: error
 
   release-candidate:
