@@ -8,7 +8,7 @@ jobs:
     env:
       GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@eef61447b9ff4aafe5dcd4e0bbf5d482be7e7871 # v4
 
       - name: Get release candidate
         id: get_data
@@ -16,7 +16,7 @@ jobs:
 
       - name: create release
         id: create_release
-        uses: actions/create-release@v1
+        uses: actions/create-release@0cb9c9b65d5d1901c1f53e5e66eaf4afd303e70e # v1
         with:
           tag_name: ${{ steps.get_data.outputs.version }}
           release_name: Release ${{ steps.get_data.outputs.version }}
@@ -24,14 +24,14 @@ jobs:
           prerelease: false
 
       - name: Download earthlyw artifact
-        uses: dawidd6/action-download-artifact@v6
+        uses: dawidd6/action-download-artifact@bf251b5aa9c2f7eeb574a96ee720e24f801b7c11 # v6
         with:
           workflow: main.yaml
           run_id: ${{ steps.get_data.outputs.run_id }}
           name: earthlyw
 
       - name: upload earthlyw to release
-        uses: actions/upload-release-asset@v1
+        uses: actions/upload-release-asset@e8f9f06c4b078e705bd2ea027f0926603fc9b4d5 # v1
         with:
           upload_url: ${{ steps.create_release.outputs.upload_url }}
           asset_path: ./earthlyw
@@ -39,21 +39,21 @@ jobs:
           asset_content_type: application/octet-stream
 
       - name: Download ew artifact
-        uses: dawidd6/action-download-artifact@v6
+        uses: dawidd6/action-download-artifact@bf251b5aa9c2f7eeb574a96ee720e24f801b7c11 # v6
         with:
           workflow: main.yaml
           run_id: ${{ steps.get_data.outputs.run_id }}
           name: ew
 
       - name: upload ew to release
-        uses: actions/upload-release-asset@v1
+        uses: actions/upload-release-asset@e8f9f06c4b078e705bd2ea027f0926603fc9b4d5 # v1
         with:
           upload_url: ${{ steps.create_release.outputs.upload_url }}
           asset_path: ./ew
           asset_name: ew
           asset_content_type: application/octet-stream
 
-      - uses: lee-dohm/close-matching-issues@v2
+      - uses: lee-dohm/close-matching-issues@e9e43aad2fa6f06a058cedfd8fb975fd93b56d8f # v2
         if: success()
         with:
           query: 'label:release-candidate'
