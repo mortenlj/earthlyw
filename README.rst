@@ -1,6 +1,16 @@
 earthlyw
 ========
 
++-------------------------------------------------------------------------------------------------------+
+| Note :exclamation:                                                                                    |
++=======================================================================================================+
+|I have stopped using earthly, and this tool is no longer of any use to me.                             |  
+|I have therefore stopped working on it, and archived the repository.                                   |  
+|Anyone is free to fork and continue the tool if they so choose, as long as they abide by the license_. |  
++-------------------------------------------------------------------------------------------------------+
+
+.. _license: ./LICENSE
+
 A wrapper for earthly_ in the vein of gradle-wrapper_.
 
 .. _earthly: https://earthly.dev
